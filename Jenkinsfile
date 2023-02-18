@@ -1,6 +1,11 @@
 pipeline{
-    agent {label 'jfrog'}
+    agent any
     stages{
+         stage('branch name'){
+            steps{
+                echo 'this is development branch'
+            }
+         }      
        stage('Git Checkout Stage'){
             steps{
                 git branch: 'main', url: 'https://github.com/artisantek/sonarqube-example.git'
@@ -11,12 +16,8 @@ pipeline{
                 sh 'mvn clean install'
             }
          }
-        stage('SonarQube Analysis Stage') {
-            steps{
-                withSonarQubeEnv('sonarqube') { 
-                    sh "mvn clean verify sonar:sonar -Dsonar.projectKey=sonar-test"
+    
                 }
             }
-        }
-    }
-}
+    
+
